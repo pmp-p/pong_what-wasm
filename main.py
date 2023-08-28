@@ -3,8 +3,12 @@ import pygbag.aio as asyncio
 import pygame
 import random
 import math
+import sys
 
 from spark import *
+
+
+__WASM__ = sys.platform in ('emscripten','wasi')
 
 async def main():
     SCREEN_SIZE = pygame.Vector2(960, 540)
@@ -233,10 +237,12 @@ async def main():
         score_text_player_2 = big_font.render(f"{score[1]}", True, "white")
         display_surface.blit(score_text_player_2, [SCREEN_SIZE.x / 2 + 40, 20])
 
-        mask = pygame.mask.from_surface(display_surface, 0)
-        screen.blit(mask.to_surface(setcolor=(0, 0, 0, 255), unsetcolor=(0, 0, 0, 0)), [5, 5])
+        if not __WASM__:
+            mask = pygame.mask.from_surface(display_surface, 0)
+            screen.blit(mask.to_surface(setcolor=(0, 0, 0, 255), unsetcolor=(0, 0, 0, 0)), [5, 5])
         screen.blit(display_surface, [0,0])
-        pygame.display.flip()
+        #pygame.display.flip()
+        pygame.display.update()
         await asyncio.sleep(0)
     pygame.quit()
 

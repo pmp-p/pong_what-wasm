@@ -26,17 +26,17 @@ class Ball:
 
         self.speed = 400
 
-def generate_shadows(objects : list[pygame.FRect, pygame.Surface]) -> list[pygame.Surface, tuple]:
+# def generate_shadows(objects : list[pygame.FRect, pygame.Surface]) -> list[pygame.Surface, tuple]:
 
-    shadows = []
+#     shadows = []
 
-    for rect, surf in objects:
+#     for rect, surf in objects:
         
-        pos = rect.topleft + pygame.Vector2(5, 5)
-        mask = pygame.mask.from_surface(surf, 0)
-        shadows.append([mask.to_surface(setcolor=(0, 0, 0, 255), unsetcolor=(0, 0, 0, 0)), pos])
+#         pos = rect.topleft + pygame.Vector2(5, 5)
+#         mask = pygame.mask.from_surface(surf, 0)
+#         shadows.append([mask.to_surface(setcolor=(0, 0, 0, 255), unsetcolor=(0, 0, 0, 0)), pos])
 
-    return shadows
+#     return shadows
 
 def generate_sparks(position : pygame.Vector2, normal : pygame.Vector2):
 
@@ -124,8 +124,6 @@ player_surface.fill("white")
 ball = Ball(pygame.Vector2())
 ball.rect.center = SCREEN_SIZE / 2
 
-shadows = generate_shadows([(player_1, player_surface), (player_2, player_surface), (ball.rect, ball.surface)])
-
 controls = {"up_1":False, "up_2":False, "down_1":False, "down_2":False}
 
 clock = pygame.Clock()
@@ -196,8 +194,6 @@ while running:
         random_angle = random.uniform(-math.pi/4, math.pi/4) + math.pi * result
         ball.direction = pygame.Vector2(math.cos(random_angle), math.sin(random_angle))
         ball.rect.center = SCREEN_SIZE / 2
-
-    shadows = generate_shadows([(player_1, player_surface), (player_2, player_surface), (ball.rect, ball.surface)])
 
     # drawing
 
